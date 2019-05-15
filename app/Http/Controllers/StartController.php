@@ -17,4 +17,12 @@ class StartController extends Controller
             'url_data' => $urlData
         ]);
     }
+
+    public function json()
+    {
+        return [
+            ['label' => 'Test 1', 'url' => 'http://google.com'],
+            ['label' => 'Test 2', 'url' => 'http://google.com'],
+        ];
+    }
 }

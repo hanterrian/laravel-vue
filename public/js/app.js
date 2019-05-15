@@ -1779,15 +1779,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['urldata'],
+  data: function data() {
+    return {
+      urldata: [],
+      is_refresh: false,
+      id: 0
+    };
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
     this.update();
   },
   methods: {
     update: function update() {
-      console.log(this.urldata);
+      var _this = this;
+
+      this.is_refresh = true;
+      axios.get('/json').then(function (response) {
+        _this.urldata = response.data;
+        _this.is_refresh = false;
+        _this.id++;
+      });
     }
   }
 });
@@ -37093,28 +37121,75 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    !_vm.is_refresh
+      ? _c("div", { staticClass: "row" }, [
+          !_vm.is_refresh
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-default text mb-1",
+                  on: { click: _vm.update }
+                },
+                [_vm._v("Update")]
+              )
+            : _vm._e()
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.is_refresh ? _c("div", { staticClass: "row" }, [_vm._m(0)]) : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("table", { staticClass: "table" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.urldata, function(url) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(url.label))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(url.url))])
+            ])
+          }),
+          0
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: "progress col-lg-12" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "progress-bar progress-bar-striped progress-bar-animated",
+          staticStyle: { width: "100%" },
+          attrs: {
+            role: "progressbar",
+            "aria-valuenow": "100",
+            "aria-valuemin": "0",
+            "aria-valuemax": "100"
+          }
+        },
+        [_vm._v("\n                Updating...\n            ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Label")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Url")])
       ])
     ])
   }
